@@ -442,7 +442,7 @@ char *s21_strcpy(char *dest, const char *src) {
   }
   return dest;
 }
-
+//DINAMIKA
 void *s21_to_upper(const char *str) {
   if (str == S21_NULL) return S21_NULL;
   char *result = (char *)malloc((s21_strlen(str) + 1) * sizeof(char));
@@ -457,7 +457,7 @@ void *s21_to_upper(const char *str) {
   result[s21_strlen(str)] = '\0';
   return result;
 }
-
+//DINAMIKA
 void *s21_to_lower(const char *str) {
   if (str == S21_NULL) return S21_NULL;
   char *result = (char *)malloc((s21_strlen(str) + 1) * sizeof(char));
@@ -472,7 +472,7 @@ void *s21_to_lower(const char *str) {
   result[s21_strlen(str)] = '\0';
   return result;
 }
-
+//DINAMIKA
 void *s21_insert(const char *src, const char *str, s21_size_t start_index) {
   if (str == S21_NULL || src == S21_NULL) return S21_NULL;
   char *result = S21_NULL;
@@ -491,7 +491,7 @@ void *s21_insert(const char *src, const char *str, s21_size_t start_index) {
   }
   return result;
 }
-
+//DINAMIKA
 void *s21_trim(const char *src, const char *trim_chars) {
   if (src == S21_NULL) return S21_NULL;
 
@@ -506,5 +506,74 @@ void *s21_trim(const char *src, const char *trim_chars) {
     s21_strncpy(result, start, len);
     result[len] = '\0';
   }
+  
+  return result;
+  //free(result)
+}
+
+
+//STATIKA
+void *s21_to_upper(const char *str, char *result) {
+  if (str == S21_NULL || result == S21_NULL) return S21_NULL;
+
+  s21_size_t i = 0;
+  while (str[i] != '\0') {
+    if (str[i] >= 'a' && str[i] <= 'z') {
+      result[i] = str[i] - 32;
+    } else {
+      result[i] = str[i];
+    }
+    i++;
+  }
+  result[i] = '\0';
+  return result;
+}
+//STATIKA
+void *s21_to_lower(const char *str, char *result) {
+  if (str == S21_NULL || result == S21_NULL) return S21_NULL;
+
+  s21_size_t i = 0;
+  while (str[i] != '\0') {
+    if (str[i] >= 'A' && str[i] <= 'Z') {
+      result[i] = str[i] + 32;
+    } else {
+      result[i] = str[i];
+    }
+    i++;
+  }
+  result[i] = '\0';
+  return result;
+}
+//STATIKA
+void *s21_insert(const char *src, const char *str, s21_size_t start_index, char *result) {
+  if (src == S21_NULL || str == S21_NULL || result == S21_NULL) return S21_NULL;
+  if (start_index > s21_strlen(src)) return S21_NULL;
+
+  s21_size_t src_len = s21_strlen(src);
+  s21_size_t str_len = s21_strlen(str);
+
+  s21_strncpy(result, src, start_index);
+
+  s21_strncpy(result + start_index, str, str_len);
+
+  s21_strncpy(result + start_index + str_len, src + start_index, src_len - start_index);
+
+  result[src_len + str_len] = '\0';
+  return result;
+}
+//STATIKA
+void *s21_trim(const char *src, const char *trim_chars, char *result) {
+  if (src == S21_NULL || trim_chars == S21_NULL || result == S21_NULL) return S21_NULL;
+
+  const char *start = src;
+  while (*start != '\0' && s21_strchr(trim_chars, *start) != S21_NULL) start++;
+
+  const char *end = src + s21_strlen(src) - 1;
+  while (end >= start && s21_strchr(trim_chars, *end) != S21_NULL) end--;
+
+  s21_size_t len = (s21_size_t)(end - start) + 1;
+  s21_strncpy(result, start, len);
+  result[len] = '\0';
+
   return result;
 }
