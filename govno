@@ -1,0 +1,89 @@
+static int parse_count(const char **str_ptr, const char *str, va_list args);
+
+case 'n':
+    value = parse_count(str_ptr, str, args);
+    break;
+
+static int parse_count(const char **str_ptr, const char *str, va_list args) {
+    int *p = va_arg(args, int *);
+    if (p) {
+        *p = *str_ptr - str; // Количество символов, прочитанных до текущей позиции
+    }
+    return 0; // %n не изменяет указатель str_ptr
+}
+
+static int parse_count(const char **str_ptr, const char *str, va_list args) {
+    int *p = va_arg(args, int *);
+    if (p) {
+        *p = *str_ptr - str; // Количество символов, прочитанных до текущей позиции
+    }
+    return 0; // %n не изменяет указатель str_ptr
+}
+
+static int parse_value(const char **str_ptr, const char *format_ptr, int width, int length_modifier, va_list args, const char *str) {
+    int value = 0;
+    switch (*format_ptr) {
+        case 'c':
+            value = parse_char(str_ptr, args);
+            break;
+        case 'd':
+        case 'i':
+            value = parse_int(str_ptr, length_modifier, args);
+            break;
+        case 'e':
+        case 'E':
+        case 'f':
+        case 'g':
+        case 'G':
+            value = parse_float(str_ptr, args);
+            break;
+        case 'o':
+            value = parse_octal(str_ptr, length_modifier, args);
+            break;
+        case 'u':
+            value = parse_unsigned(str_ptr, length_modifier, args);
+            break;
+        case 'x':
+        case 'X':
+            value = parse_hex(str_ptr, length_modifier, args);
+            break;
+        case 'p':
+            value = parse_pointer(str_ptr, args);
+            break;
+        case 'n':
+            value = parse_count(str_ptr, str, args);
+            break;
+        case 's':
+            value = parse_string(str_ptr, width, args);
+            break;
+        default:
+            break;
+    }
+    return value;
+}
+
+static int parse_input(const char *str, const char *format, va_list args) {
+    int result = 0;
+    const char *str_ptr = str;
+    const char *format_ptr = format;
+
+    while (*format_ptr) {
+        if (*format_ptr != '%') {
+            if (*str_ptr != *format_ptr) {
+                skip_spaces(&str_ptr);
+                skip_spaces(&format_ptr);
+            } else {
+                str_ptr++;
+                format_ptr++;
+            }
+        } else {
+            format_ptr++;
+            int flags = 0, width = -1, precision = -1, length_modifier = 0;
+            parse_format_specifier(&format_ptr, &flags, &width, &precision, &length_modifier);
+            result += parse_value(&str_ptr, format_ptr, width, length_modifier, args, str);
+            format_ptr++;
+        }
+    }
+
+    return result;
+}
