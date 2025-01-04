@@ -1,1 +1,1 @@
-Я учусь 
+Я EBAL VSE ETO
