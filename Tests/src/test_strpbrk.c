@@ -6,9 +6,10 @@ START_TEST(strpbrk_1) {
   char str[] = "qweasd123";
   char find[] = "1";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, str + 6);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -16,9 +17,10 @@ START_TEST(strpbrk_2) {
   char str[] = "qweasd123";
   char find[] = "ASDF";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -26,9 +28,10 @@ START_TEST(strpbrk_3) {
   char str[] = "qweasd123";
   char find[] = "123q";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, str);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -36,9 +39,10 @@ START_TEST(strpbrk_4) {
   char str[] = "";
   char find[] = "123q";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -46,9 +50,10 @@ START_TEST(strpbrk_5) {
   char str[] = "qweasd123";
   char find[] = "";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -56,9 +61,10 @@ START_TEST(strpbrk_6) {
   char str[] = "";
   char find[] = "";
 
+  char* expected = strpbrk(str, find);
   char* ret = s21_strpbrk(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 

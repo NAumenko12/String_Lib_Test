@@ -5,82 +5,50 @@
 START_TEST(strerror_1) {
   int errcode = 0;
 
-#ifdef __linux__
-
+  char* expected = strerror(errcode);
   char* ret = s21_strerror(errcode);
 
-  ck_assert_pstr_eq(ret, "Success");
-
-#elif __APPLE__
-
-  char* ret = s21_strerror(errcode);
-
-  ck_assert_pstr_eq(ret, "Error 0");
-
-#endif
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(strerror_2) {
   int errcode = 1;
 
+  char* expected = strerror(errcode);
   char* ret = s21_strerror(errcode);
 
-  ck_assert_pstr_eq(ret, "Operation not permitted");
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(strerror_3) {
   int errcode = -1;
-#ifdef __linux__
 
+  char* expected = strerror(errcode);
   char* ret = s21_strerror(errcode);
 
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#elif __APPLE__
-
-  char* ret = s21_strerror(errcode);
-
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#endif
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(strerror_4) {
   int errcode = -112;
-#ifdef __linux__
 
+  char* expected = strerror(errcode);
   char* ret = s21_strerror(errcode);
 
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#elif __APPLE__
-
-  char* ret = s21_strerror(errcode);
-
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#endif
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(strerror_5) {
   int errcode = 666;
-#ifdef __linux__
 
+  char* expected = strerror(errcode);
   char* ret = s21_strerror(errcode);
 
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#elif __APPLE__
-
-  char* ret = s21_strerror(errcode);
-
-  ck_assert_pstr_eq(ret, "Unknown error");
-
-#endif
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 

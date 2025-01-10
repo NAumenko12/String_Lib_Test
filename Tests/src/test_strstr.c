@@ -6,9 +6,10 @@ START_TEST(strstr_1) {
   char str[] = "qweasdzxc";
   char find[] = "zxc";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, str + 6);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -16,9 +17,10 @@ START_TEST(strstr_2) {
   char str[] = "eweasdzxc";
   char find[] = "ASD";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -26,9 +28,10 @@ START_TEST(strstr_3) {
   char str[] = "\tw\tasdzxc";
   char find[] = "w\ta";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, str + 1);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -36,9 +39,10 @@ START_TEST(strstr_4) {
   char str[] = "";
   char find[] = "ASD";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -46,9 +50,10 @@ START_TEST(strstr_5) {
   char str[] = "eweasdzxc";
   char find[] = "";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, str);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 
@@ -56,9 +61,10 @@ START_TEST(strstr_6) {
   char str[] = "";
   char find[] = "";
 
+  char* expected = strstr(str, find);
   char* ret = s21_strstr(str, find);
 
-  ck_assert_ptr_eq(ret, str);
+  ck_assert_ptr_eq(ret, expected);
 }
 END_TEST
 

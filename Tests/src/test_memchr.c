@@ -1,4 +1,5 @@
 #include <check.h>
+#include <string.h>
 
 #include "s21_string.h"
 
@@ -6,9 +7,10 @@ START_TEST(memchr_1) {
   const char str[] = "ABCDEFG";
   int char_to_find = 'D';
 
+  const char* expected = memchr(str, char_to_find, 7);
   const char* finded = s21_memchr(str, char_to_find, 7);
 
-  ck_assert_ptr_eq(finded, str + 3);
+  ck_assert_ptr_eq(finded, expected);
 }
 END_TEST
 
@@ -16,9 +18,10 @@ START_TEST(memchr_2) {
   const char str[] = "ABCDEFA";
   int char_to_find = 'A';
 
+  const char* expected = memchr(str, char_to_find, 7);
   const char* finded = s21_memchr(str, char_to_find, 7);
 
-  ck_assert_ptr_eq(finded, str);
+  ck_assert_ptr_eq(finded, expected);
 }
 END_TEST
 
@@ -26,9 +29,10 @@ START_TEST(memchr_3) {
   const char str[] = "ABCDEFA";
   int char_to_find = 'a';
 
+  const char* expected = memchr(str, char_to_find, 7);
   const char* finded = s21_memchr(str, char_to_find, 7);
 
-  ck_assert_ptr_eq(finded, S21_NULL);
+  ck_assert_ptr_eq(finded, expected);
 }
 END_TEST
 
@@ -36,9 +40,10 @@ START_TEST(memchr_4) {
   const char str[] = "ABCDEFA";
   int char_to_find = '\0';
 
+  const char* expected = memchr(str, char_to_find, 8);
   const char* finded = s21_memchr(str, char_to_find, 8);
 
-  ck_assert_ptr_eq(finded, str + 7);
+  ck_assert_ptr_eq(finded, expected);
 }
 END_TEST
 
@@ -46,9 +51,10 @@ START_TEST(memchr_5) {
   const char str[] = "ABCDEFA\nQWEASDZXC";
   int char_to_find = 'Z';
 
+  const char* expected = memchr(str, char_to_find, 17);
   const char* finded = s21_memchr(str, char_to_find, 17);
 
-  ck_assert_ptr_eq(finded, str + 14);
+  ck_assert_ptr_eq(finded, expected);
 }
 END_TEST
 

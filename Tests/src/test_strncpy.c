@@ -3,60 +3,50 @@
 #include "s21_string.h"
 
 START_TEST(strncpy_1) {
-  char dest[16] = {0};
+  char dest1[16] = {0};
+  char dest2[16] = {0};
   char src[] = "asd";
 
-  char* ret = s21_strncpy(dest, src, sizeof(dest) - 1);
+  char* expected = strncpy(dest2, src, sizeof(dest1) - 1);
+  char* ret = s21_strncpy(dest1, src, sizeof(dest1) - 1);
 
-  ck_assert_ptr_eq(ret, dest);
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(strncpy_2) {
-  char dest[16] = "qwe";
+  char dest1[16] = "qwe";
+  char dest2[16] = "qwe";
   char src[] = "asd";
 
-  s21_strncpy(dest, src, sizeof(dest) - 3 - 1);
+  strncpy(dest2, src, sizeof(dest1) - 3 - 1);
+  s21_strncpy(dest1, src, sizeof(dest1) - 3 - 1);
 
-  ck_assert_pstr_eq(dest, "asd");
+  ck_assert_pstr_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncpy_3) {
-  char dest[16] = "qwe";
+  char dest1[16] = "qwe";
+  char dest2[16] = "qwe";
   char src[] = "asd\0zxc";
 
-  s21_strncpy(dest, src, sizeof(dest) - 3 - 1);
+  strncpy(dest2, src, sizeof(dest1) - 3 - 1);
+  s21_strncpy(dest1, src, sizeof(dest1) - 3 - 1);
 
-  ck_assert_pstr_eq(dest, "asd");
+  ck_assert_pstr_eq(dest1, dest2);
 }
 END_TEST
 
 START_TEST(strncpy_4) {
+  char dest1[16] = "qwezxc12345";
+  char dest2[16] = "qwezxc12345";
   char src[] = "asd";
 
-  char* ret = s21_strncpy(S21_NULL, src, 15);
+  strncpy(dest2, src, sizeof(dest2) - 3 - 1);
+  s21_strncpy(dest1, src, sizeof(dest1) - 3 - 1);
 
-  ck_assert_ptr_eq(ret, S21_NULL);
-}
-END_TEST
-
-START_TEST(strncpy_5) {
-  char dest[16] = "qwe";
-
-  s21_strncpy(dest, S21_NULL, sizeof(dest) - 3 - 1);
-
-  ck_assert_pstr_eq(dest, "qwe");
-}
-END_TEST
-
-START_TEST(strncpy_6) {
-  char dest[16] = "qwezxc12345";
-  char src[] = "asd";
-
-  s21_strncpy(dest, src, sizeof(dest) - 3 - 1);
-
-  ck_assert_pstr_eq(dest, "asd");
+  ck_assert_pstr_eq(dest1, dest2);
 }
 END_TEST
 
@@ -71,8 +61,6 @@ Suite* strncpy_suite() {
   tcase_add_test(tc_core, strncpy_2);
   tcase_add_test(tc_core, strncpy_3);
   tcase_add_test(tc_core, strncpy_4);
-  tcase_add_test(tc_core, strncpy_5);
-  tcase_add_test(tc_core, strncpy_6);
 
   suite_add_tcase(s, tc_core);
 

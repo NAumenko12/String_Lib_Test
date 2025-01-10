@@ -486,7 +486,7 @@ START_TEST(sprintf_40) {
   char buf2[64] = {0};
   float d = 123.45;
 
-  sprintf(buf1, "|%-+010.2f|", d);
+  sprintf(buf1, "|%-+10.2f|", d);
   s21_sprintf(buf2, "|%-+010.2f|", d);
 
   ck_assert_str_eq(buf1, buf2);

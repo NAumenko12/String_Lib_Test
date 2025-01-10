@@ -4,53 +4,62 @@
 
 START_TEST(memcpy_1) {
   const char str[] = "ABCDEFG";
-  char buf[16] = {0};
+  char buf1[16] = {0};
+  char buf2[16] = {0};
 
-  __attribute_maybe_unused__ const char* ret =
-      s21_memcpy(buf, str, sizeof(str));
+  memcpy(buf2, str, sizeof(str));
+  s21_memcpy(buf1, str, sizeof(str));
 
-  ck_assert_pstr_eq(buf, str);
+  ck_assert_pstr_eq(buf1, buf2);
 }
 END_TEST
 
 START_TEST(memcpy_2) {
   const char str[] = "ABCDEFG";
-  char buf[16] = {0};
+  char buf1[16] = {0};
+  char buf2[16] = {0};
 
-  const char* ret = s21_memcpy(buf, str, sizeof(str));
+  const char* expected = memcpy(buf2, str, sizeof(str));
+  const char* ret = s21_memcpy(buf1, str, sizeof(str));
 
-  ck_assert_pstr_eq(ret, str);
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(memcpy_3) {
   const char str[] = "ABCDEFG\0abcdefg";
-  char buf[16] = {0};
+  char buf1[16] = {0};
+  char buf2[16] = {0};
 
-  const char* ret = s21_memcpy(buf, str, sizeof(str));
+  const char* expected = memcpy(buf2, str, sizeof(str));
+  const char* ret = s21_memcpy(buf1, str, sizeof(str));
 
-  ck_assert_pstr_eq(ret, str);
-  ck_assert_pstr_eq(ret + 8, str + 8);
+  ck_assert_pstr_eq(ret, expected);
+  ck_assert_pstr_eq(ret + 8, expected + 8);
 }
 END_TEST
 
 START_TEST(memcpy_4) {
   const char str[] = "ABCDEFG";
-  char buf[16] = "123";
+  char buf1[16] = "123";
+  char buf2[16] = "123";
 
-  const char* ret = s21_memcpy(buf, str, 0);
+  const char* expected = memcpy(buf2, str, 0);
+  const char* ret = s21_memcpy(buf1, str, 0);
 
-  ck_assert_pstr_eq(ret, "123");
+  ck_assert_pstr_eq(ret, expected);
 }
 END_TEST
 
 START_TEST(memcpy_5) {
   int src = 0xff << 15;
-  int dest = 0;
+  int dest1 = 0;
+  int dest2 = 0;
 
-  int* ret = s21_memcpy(&dest, &src, sizeof(int));
+  int* expected = memcpy(&dest2, &src, sizeof(int));
+  int* ret = s21_memcpy(&dest1, &src, sizeof(int));
 
-  ck_assert_int_eq(*ret, 0xff << 15);
+  ck_assert_int_eq(*ret, *expected);
 }
 END_TEST
 

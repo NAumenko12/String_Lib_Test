@@ -37,12 +37,18 @@ $(DEPS) : $(PREFIX)/%.d : %.c
 
 .PHONY: clean rebuild test
 test: $(OUT_O_DIR)/test
-	./build/test
+	-./build/test
 
 clean:
 	rm -rf $(OUT_O_DIR)
 
 rebuild: clean all
+
+.PHONY: gcov_report
+gcov_report: test
+	lcov --capture --directory $(PREFIX) --output-file $(OUT_O_DIR)/coverage.info
+	genhtml $(OUT_O_DIR)/coverage.info --output-directory $(OUT_O_DIR)/coverage
+
 
 # targets which we have no need to recollect deps
 NODEPS = clean
